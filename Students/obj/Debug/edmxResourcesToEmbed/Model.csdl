@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AssessmentsTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Assessment" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="IndeksID" Type="Int32" />
+    <NavigationProperty Name="StudentsTable" Relationship="StudentsDBModel.FK__Assessmen__Indek__0F624AF8" FromRole="AssessmentsTable" ToRole="StudentsTable" />
+  </EntityType>
+  <EntityType Name="StudentsTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="StudentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StudentSurname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateOfBirt" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="AssessmentsTable" Relationship="StudentsDBModel.FK__Assessmen__Indek__0F624AF8" FromRole="StudentsTable" ToRole="AssessmentsTable" />
+  </EntityType>
+  <EntityContainer Name="StudentsDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AssessmentsTable" EntityType="Self.AssessmentsTable" />
+    <EntitySet Name="StudentsTable" EntityType="Self.StudentsTable" />
+    <AssociationSet Name="FK__Assessmen__Indek__0F624AF8" Association="StudentsDBModel.FK__Assessmen__Indek__0F624AF8">
+      <End Role="StudentsTable" EntitySet="StudentsTable" />
+      <End Role="AssessmentsTable" EntitySet="AssessmentsTable" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK__Assessmen__Indek__0F624AF8">
+    <End Type="StudentsDBModel.StudentsTable" Role="StudentsTable" Multiplicity="0..1" />
+    <End Type="StudentsDBModel.AssessmentsTable" Role="AssessmentsTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentsTable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentsTable">
+        <PropertyRef Name="IndeksID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

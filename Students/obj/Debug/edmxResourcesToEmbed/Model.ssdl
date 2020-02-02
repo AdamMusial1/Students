@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AssessmentsTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Assessment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="IndeksID" Type="int" />
+  </EntityType>
+  <EntityType Name="StudentsTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="StudentName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="StudentSurname" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DateOfBirt" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Assessmen__Indek__29221CFB">
+    <End Role="StudentsTable" Type="Self.StudentsTable" Multiplicity="0..1" />
+    <End Role="AssessmentsTable" Type="Self.AssessmentsTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentsTable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentsTable">
+        <PropertyRef Name="IndeksID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudentsDBModelStoreContainer">
+    <EntitySet Name="AssessmentsTable" EntityType="Self.AssessmentsTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentsTable" EntityType="Self.StudentsTable" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Assessmen__Indek__29221CFB" Association="Self.FK__Assessmen__Indek__29221CFB">
+      <End Role="StudentsTable" EntitySet="StudentsTable" />
+      <End Role="AssessmentsTable" EntitySet="AssessmentsTable" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

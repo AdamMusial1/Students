@@ -1,0 +1,119 @@
+﻿<Controls:MetroWindow
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" x:Class="Students.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Loaded="MetroWindow_Loaded"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="WyszykajTb" Height="20" Background="WhiteSmoke" Width="200" Margin="4,4,0,0" Grid.Column="0" Grid.Row="0" KeyUp="WyszykajTb_KeyUp"/>
+            <Label Content="Od:" Grid.Column="1" Margin="3,0,-3,0" Grid.Row="0" VerticalAlignment="Center"/>
+            <Controls:DateTimePicker x:Name="OdDp" Grid.Column="2" Grid.Row="0" SelectedDateChanged="Dp_SelectedDateChanged"/>
+            <Label Content="Do:" Grid.Column="3" Margin="3,0,-3,0" Grid.Row="0" VerticalAlignment="Center"/>
+            <Controls:DateTimePicker x:Name="DoDp" Grid.Column="4" Grid.Row="0" SelectedDateChanged="Dp_SelectedDateChanged"/>
+            <Button Grid.Column="5" ToolTip="Dodaj Studenta" x:Name="DodajStudenta" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Green" HorizontalAlignment="Left" Click="DodajStudenta_Click" Width="40" Height="40" VerticalAlignment="Center" Margin="6,6,0,0">
+                <Rectangle Width="20" Height="20" Fill="Green">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Grid.Column="6" ToolTip="Usuń Studenta" x:Name="UsunStudenta" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="White" HorizontalAlignment="Left" Click="UsunStudenta_Click" Width="40" Height="40" VerticalAlignment="Center" Margin="6,6,0,0">
+                <Rectangle Width="30" Height="25" Fill="Red">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_app_remove}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Grid.Column="7" ToolTip="Edytuj Studenta" x:Name="EdytujStudenta" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Blue" HorizontalAlignment="Left" Click="EdytujStudenta_Click" Width="40" Height="40" VerticalAlignment="Center" Margin="6,6,0,0">
+                <Rectangle Width="17" Height="17" Fill="blue">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_edit}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="11*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="LISTA STUDENTÓW" FontWeight="DemiBold" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="30,0,338,0"/>
+            <DataGrid x:Name="ListaStudentowDg" Margin="5,0,0,0" Grid.Row="1"
+                    CanUserAddRows="False"       
+                    CanUserDeleteRows="False"
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False"
+                    SelectionMode="Extended"
+                      SelectionChanged="ListaStudentowDg_SelectionChanged"
+                    Background="Transparent" Grid.ColumnSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Imię" Binding="{Binding StudentName}" />
+                    <DataGridTextColumn Header="Nazwisko" Binding="{Binding StudentSurname}"/>
+                    <DataGridTextColumn Header="Numer Indeksu" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Data Urodzenia" Binding="{Binding DateOfBirt}"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="DodajOceneBtn" Background="DeepSkyBlue" Foreground="PapayaWhip" FontSize="12" FontWeight="DemiBold" Click="DodajOceneBtn_Click" Content="DODAJ OCENĘ" BorderThickness="0">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="OCENY STUDENTA" FontWeight="DemiBold" HorizontalAlignment="Center" Grid.Row="0"/>
+            <DataGrid x:Name="OcenyDg" Margin="5,0,0,0" Grid.Row="1"
+                    CanUserAddRows="False"       
+                    CanUserDeleteRows="False"
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False"
+                    SelectionMode="Extended"
+                    Background="Transparent">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Nr.Indeks" Binding="{Binding IndeksID}"/>
+                    <DataGridTextColumn Header="Ocena" Binding="{Binding Assessment}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

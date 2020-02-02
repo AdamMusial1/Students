@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StudentsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AssessmentsTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Assessment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="IndeksID" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentsTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StudentName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="StudentSurname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="DateOfBirt" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Assessmen__Indek__29221CFB">
+          <End Role="StudentsTable" Type="Self.StudentsTable" Multiplicity="0..1" />
+          <End Role="AssessmentsTable" Type="Self.AssessmentsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentsTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssessmentsTable">
+              <PropertyRef Name="IndeksID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentsDBModelStoreContainer">
+          <EntitySet Name="AssessmentsTable" EntityType="Self.AssessmentsTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentsTable" EntityType="Self.StudentsTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Assessmen__Indek__29221CFB" Association="Self.FK__Assessmen__Indek__29221CFB">
+            <End Role="StudentsTable" EntitySet="StudentsTable" />
+            <End Role="AssessmentsTable" EntitySet="AssessmentsTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StudentsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AssessmentsTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Assessment" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="IndeksID" Type="Int32" />
+          <NavigationProperty Name="StudentsTable" Relationship="StudentsDBModel.FK__Assessmen__Indek__0F624AF8" FromRole="AssessmentsTable" ToRole="StudentsTable" />
+        </EntityType>
+        <EntityType Name="StudentsTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StudentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StudentSurname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateOfBirt" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AssessmentsTable" Relationship="StudentsDBModel.FK__Assessmen__Indek__0F624AF8" FromRole="StudentsTable" ToRole="AssessmentsTable" />
+        </EntityType>
+        <EntityContainer Name="StudentsDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AssessmentsTable" EntityType="Self.AssessmentsTable" />
+          <EntitySet Name="StudentsTable" EntityType="Self.StudentsTable" />
+          <AssociationSet Name="FK__Assessmen__Indek__0F624AF8" Association="StudentsDBModel.FK__Assessmen__Indek__0F624AF8">
+            <End Role="StudentsTable" EntitySet="StudentsTable" />
+            <End Role="AssessmentsTable" EntitySet="AssessmentsTable" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK__Assessmen__Indek__0F624AF8">
+          <End Type="StudentsDBModel.StudentsTable" Role="StudentsTable" Multiplicity="0..1" />
+          <End Type="StudentsDBModel.AssessmentsTable" Role="AssessmentsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentsTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssessmentsTable">
+              <PropertyRef Name="IndeksID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StudentsDBModelStoreContainer" CdmEntityContainer="StudentsDBEntities">
+    <EntitySetMapping Name="AssessmentsTable">
+      <EntityTypeMapping TypeName="IsTypeOf(StudentsDBModel.AssessmentsTable)">
+        <MappingFragment StoreEntitySet="AssessmentsTable">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Assessment" ColumnName="Assessment" />
+          <ScalarProperty Name="IndeksID" ColumnName="IndeksID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentsTable">
+      <EntityTypeMapping TypeName="IsTypeOf(StudentsDBModel.StudentsTable)">
+        <MappingFragment StoreEntitySet="StudentsTable">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+          <ScalarProperty Name="StudentSurname" ColumnName="StudentSurname" />
+          <ScalarProperty Name="DateOfBirt" ColumnName="DateOfBirt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

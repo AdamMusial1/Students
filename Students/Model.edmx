@@ -12,6 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Assessment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="IndeksID" Type="int" />
+          <Property Name="Subjects" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="StudentsTable">
           <Key>
@@ -22,7 +23,7 @@
           <Property Name="StudentSurname" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="DateOfBirt" Type="date" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Assessmen__Indek__29221CFB">
+        <Association Name="FK__Assessmen__Indek__73852659">
           <End Role="StudentsTable" Type="Self.StudentsTable" Multiplicity="0..1" />
           <End Role="AssessmentsTable" Type="Self.AssessmentsTable" Multiplicity="*" />
           <ReferentialConstraint>
@@ -37,7 +38,7 @@
         <EntityContainer Name="StudentsDBModelStoreContainer">
           <EntitySet Name="AssessmentsTable" EntityType="Self.AssessmentsTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentsTable" EntityType="Self.StudentsTable" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Assessmen__Indek__29221CFB" Association="Self.FK__Assessmen__Indek__29221CFB">
+          <AssociationSet Name="FK__Assessmen__Indek__73852659" Association="Self.FK__Assessmen__Indek__73852659">
             <End Role="StudentsTable" EntitySet="StudentsTable" />
             <End Role="AssessmentsTable" EntitySet="AssessmentsTable" />
           </AssociationSet>
@@ -54,6 +55,7 @@
           <Property Name="Assessment" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="IndeksID" Type="Int32" />
           <NavigationProperty Name="StudentsTable" Relationship="StudentsDBModel.FK__Assessmen__Indek__0F624AF8" FromRole="AssessmentsTable" ToRole="StudentsTable" />
+          <Property Name="Subjects" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StudentsTable">
           <Key>
@@ -94,7 +96,8 @@
     <EntitySetMapping Name="AssessmentsTable">
       <EntityTypeMapping TypeName="IsTypeOf(StudentsDBModel.AssessmentsTable)">
         <MappingFragment StoreEntitySet="AssessmentsTable">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Subjects" ColumnName="Subjects" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Assessment" ColumnName="Assessment" />
           <ScalarProperty Name="IndeksID" ColumnName="IndeksID" />
         </MappingFragment>

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="AssessmentsTable">
       <EntityTypeMapping TypeName="IsTypeOf(StudentsDBModel.AssessmentsTable)">
         <MappingFragment StoreEntitySet="AssessmentsTable">
+          <ScalarProperty Name="Subjects" ColumnName="Subjects" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Assessment" ColumnName="Assessment" />
           <ScalarProperty Name="IndeksID" ColumnName="IndeksID" />

@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Students.Okna"
     WindowStartupLocation="CenterScreen"
+    ResizeMode="CanMinimize"
     Loaded="Window_Loaded"
     mc:Ignorable="d"
-    Title="EditStudent" Height="180" Width="240">
+    Title="EditStudent" MinHeight="180" MinWidth="240" MaxHeight="180" MaxWidth="240">
     <Grid Margin="4,4,4,4">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,25 +21,42 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Nr. Indeksu:"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Imię:" />
         <Label Grid.Row="2" Grid.Column="0" Content="Nazwisko:" />
         <Label Grid.Row="3" Grid.Column="0" Content="Data Urodzenia:" />
-        <TextBox x:Name="IndeksTb" Grid.Row="0" Grid.Column="1" Width="100" IsEnabled="False"/>
-        <TextBox x:Name="ImieTb" Grid.Row="1" Grid.Column="1" Width="100" KeyUp="Tb_Validate"/>
-        <TextBox x:Name="NazwiskoTb" Grid.Row="2" Grid.Column="1" Width="100" KeyUp="Tb_Validate"/>
-        <DatePicker x:Name="DataDp" Grid.Row="3" Grid.Column="1" Width="100" SelectedDateChanged="Tb_Validate"/>
-        <Button x:Name="EdytujStudentaBtn" Margin="3" Grid.Row="4" Grid.Column="0" Click="EdytujStudentaBtn_Click" Content="Zatwierdź zmiany" IsEnabled="False"/>
-        <Button Grid.Column="1" Grid.Row="4" x:Name="WalidacjaOpen" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Green" HorizontalAlignment="Left" Width="30" Height="30" VerticalAlignment="Center" Visibility="Hidden" >
+        <TextBox x:Name="IndeksTb" Grid.Row="0" Grid.Column="1" IsEnabled="False"/>
+        <TextBox x:Name="ImieTb" Grid.Row="1" MaxLength="30" ToolTip="Minimum 3 znaki" Grid.Column="1" KeyUp="Tb_Validate" PreviewTextInput="Tb_PreviewTextInput"/>
+        <TextBox x:Name="NazwiskoTb" Grid.Row="2" MaxLength="30" ToolTip="Minimum 3 znaki" Grid.Column="1" KeyUp="Tb_Validate" PreviewTextInput="Tb_PreviewTextInput"/>
+        <DatePicker x:Name="DataDp" Grid.Row="3" Grid.Column="1" SelectedDateChanged="Tb_Validate">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <Grid Grid.Row="4" Grid.Column="0">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Button x:Name="EdytujStudentaBtn" Margin="3" Grid.Row="4" Grid.Column="0" Foreground="White" Background="DeepSkyBlue" Click="EdytujStudentaBtn_Click" Content="Zatwierdź zmiany" IsEnabled="False"/>
+        </Grid>
+        <Button Grid.Column="1" Grid.Row="4" x:Name="WalidacjaOpen" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Green" HorizontalAlignment="Left" Width="30" Height="30" IsEnabled="False" VerticalAlignment="Center" Visibility="Hidden" >
             <Rectangle Width="10" Height="10" Fill="Green">
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_door_enter}" />
                 </Rectangle.OpacityMask>
             </Rectangle>
         </Button>
-        <Button Grid.Column="1" Grid.Row="4" x:Name="WalidacjaLock" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Red" HorizontalAlignment="Left" Width="30" Height="30" VerticalAlignment="Center" Visibility="Hidden" >
+        <Button Grid.Column="1" Grid.Row="4" x:Name="WalidacjaLock" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Red" HorizontalAlignment="Left" Width="30" Height="30" IsEnabled="False" VerticalAlignment="Center" Visibility="Visible" >
             <Rectangle Width="10" Height="10" Fill="Red">
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_lock}" />

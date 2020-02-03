@@ -24,27 +24,70 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="WyszykajTb" Height="20" Background="WhiteSmoke" Width="200" Margin="4,4,0,0" Grid.Column="0" Grid.Row="0" KeyUp="WyszykajTb_KeyUp"/>
-            <Label Content="Od:" Grid.Column="1" Margin="3,0,-3,0" Grid.Row="0" VerticalAlignment="Center"/>
-            <Controls:DateTimePicker x:Name="OdDp" Grid.Column="2" Grid.Row="0" SelectedDateChanged="Dp_SelectedDateChanged"/>
-            <Label Content="Do:" Grid.Column="3" Margin="3,0,-3,0" Grid.Row="0" VerticalAlignment="Center"/>
-            <Controls:DateTimePicker x:Name="DoDp" Grid.Column="4" Grid.Row="0" SelectedDateChanged="Dp_SelectedDateChanged"/>
-            <Button Grid.Column="5" ToolTip="Dodaj Studenta" x:Name="DodajStudenta" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Green" HorizontalAlignment="Left" Click="DodajStudenta_Click" Width="40" Height="40" VerticalAlignment="Center" Margin="6,6,0,0">
+            <Label Content="Szukaj:" Grid.Column="0" Margin="3,0,-3,0" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="WyszykajTb" Height="20" Background="WhiteSmoke" Width="200" MaxLength="20" Margin="4,4,0,0" Grid.Column="1" Grid.Row="0" KeyUp="WyszykajTb_KeyUp"/>
+            <Label Content="Od:" Grid.Column="2" Margin="3,0,-3,0" Grid.Row="0" VerticalAlignment="Center"/>
+            <DatePicker x:Name="OdDp" Grid.Column="3" Grid.Row="0" Margin="0,9,4,4" SelectedDateChanged="Dp_SelectedDateChanged">
+                <DatePicker.Resources>
+                    <Style TargetType="DatePickerTextBox">
+                        <Setter Property="IsReadOnly" Value="True"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+            <Label Content="Do:" Grid.Column="4" Margin="3,0,-3,0" Grid.Row="0" VerticalAlignment="Center"/>
+            <DatePicker x:Name="DoDp" Grid.Column="5" Grid.Row="0" Margin="0,9,4,4" SelectedDateChanged="Dp_SelectedDateChanged">
+                <DatePicker.Resources>
+                    <Style TargetType="DatePickerTextBox">
+                        <Setter Property="IsReadOnly" Value="True"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+            <Button Grid.Column="6" ToolTip="Dodaj Studenta" x:Name="DodajStudenta" BorderThickness="0" HorizontalAlignment="Left" Background="White" Click="DodajStudenta_Click" Width="35" Height="35" VerticalAlignment="Center" Margin="6,6,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <Rectangle Width="20" Height="20" Fill="Green">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Grid.Column="6" ToolTip="Usuń Studenta" x:Name="UsunStudenta" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="White" HorizontalAlignment="Left" Click="UsunStudenta_Click" Width="40" Height="40" VerticalAlignment="Center" Margin="6,6,0,0">
+            <Button Grid.Column="7" ToolTip="Usuń Studenta" x:Name="UsunStudenta" BorderThickness="0" HorizontalAlignment="Left" Background="White" Click="UsunStudenta_Click" Width="35" Height="35" VerticalAlignment="Center" Margin="6,6,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <Rectangle Width="30" Height="25" Fill="Red">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_app_remove}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Grid.Column="7" ToolTip="Edytuj Studenta" x:Name="EdytujStudenta" Style="{DynamicResource MetroCircleButtonStyle}" BorderBrush="Blue" HorizontalAlignment="Left" Click="EdytujStudenta_Click" Width="40" Height="40" VerticalAlignment="Center" Margin="6,6,0,0">
+            <Button Grid.Column="8" ToolTip="Edytuj Studenta" x:Name="EdytujStudenta" HorizontalAlignment="Left" Click="EdytujStudenta_Click" Background="White" Width="35" Height="35" BorderThickness="0" VerticalAlignment="Center" Margin="6,6,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <Rectangle Width="17" Height="17" Fill="blue">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_edit}" />
@@ -59,26 +102,65 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="LISTA STUDENTÓW" FontWeight="DemiBold" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="30,0,338,0"/>
-            <DataGrid x:Name="ListaStudentowDg" Margin="5,0,0,0" Grid.Row="1"
+            <Grid Margin="5,0,0,0" Grid.Row="1" Grid.ColumnSpan="2">
+                <DataGrid x:Name="ListaStudentowDg" 
+                    CanUserAddRows="False"       
+                    CanUserDeleteRows="False"
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False"
+                    SelectionMode="Extended" 
+                    GotFocus="ListaStudentowDg_GotFocus"
+                    SelectionChanged="ListaStudentowDg_SelectionChanged"
+                    Background="Transparent" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Imię" Binding="{Binding StudentName}" />
+                        <DataGridTextColumn Header="Nazwisko" Binding="{Binding StudentSurname}"/>
+                        <DataGridTextColumn Header="Numer Indeksu" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Data Urodzenia" Binding="{Binding DateOfBirt, StringFormat='{}{0:yyyy/MM/dd}'}"/>
+                        <DataGridTemplateColumn Header="Dodaj Ocenę" MinWidth="110" MaxWidth="110">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="DodajOceneBtn" Background="DeepSkyBlue" Foreground="PapayaWhip" FontSize="12" FontWeight="DemiBold" Click="DodajOceneBtn_Click" Content="Kliknij" BorderThickness="0">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="OCENY STUDENTA" FontWeight="DemiBold" HorizontalAlignment="Center" Grid.Row="0"/>
+            <DataGrid x:Name="OcenyDg" Margin="5,0,0,0" Grid.Row="1"
                     CanUserAddRows="False"       
                     CanUserDeleteRows="False"
                     IsReadOnly="True"
                     AutoGenerateColumns="False"
                     SelectionMode="Extended"
-                      SelectionChanged="ListaStudentowDg_SelectionChanged"
-                    Background="Transparent" Grid.ColumnSpan="2">
+                    Background="Transparent">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Imię" Binding="{Binding StudentName}" />
-                    <DataGridTextColumn Header="Nazwisko" Binding="{Binding StudentSurname}"/>
-                    <DataGridTextColumn Header="Numer Indeksu" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="Data Urodzenia" Binding="{Binding DateOfBirt}"/>
-                    <DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Przedmiot" Binding="{Binding Subjects}"/>
+                    <DataGridTextColumn Header="Ocena" Binding="{Binding Assessment}"/>
+                    <DataGridTemplateColumn Header="Usuń Ocenę" MinWidth="110" MaxWidth="110">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="DodajOceneBtn" Background="DeepSkyBlue" Foreground="PapayaWhip" FontSize="12" FontWeight="DemiBold" Click="DodajOceneBtn_Click" Content="DODAJ OCENĘ" BorderThickness="0">
+                                <Button x:Name="UsunBtn" ToolTip="Usuń ocenę" Background="Red" Foreground="PapayaWhip" FontSize="12" FontWeight="DemiBold" Click="UsunBtn_Click" Content="Kliknij" BorderThickness="0">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Style.Triggers>
@@ -92,26 +174,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-        <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label Content="OCENY STUDENTA" FontWeight="DemiBold" HorizontalAlignment="Center" Grid.Row="0"/>
-            <DataGrid x:Name="OcenyDg" Margin="5,0,0,0" Grid.Row="1"
-                    CanUserAddRows="False"       
-                    CanUserDeleteRows="False"
-                    IsReadOnly="True"
-                    AutoGenerateColumns="False"
-                    SelectionMode="Extended"
-                    Background="Transparent">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="Nr.Indeks" Binding="{Binding IndeksID}"/>
-                    <DataGridTextColumn Header="Ocena" Binding="{Binding Assessment}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -8,6 +8,7 @@
     <Property Name="Assessment" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
     <Property Name="IndeksID" Type="Int32" />
     <NavigationProperty Name="StudentsTable" Relationship="StudentsDBModel.FK__Assessmen__Indek__0F624AF8" FromRole="AssessmentsTable" ToRole="StudentsTable" />
+    <Property Name="Subjects" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="StudentsTable">
     <Key>

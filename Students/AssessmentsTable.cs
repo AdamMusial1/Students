@@ -17,6 +17,7 @@ namespace Students
         public int Id { get; set; }
         public decimal Assessment { get; set; }
         public Nullable<int> IndeksID { get; set; }
+        public string Subjects { get; set; }
     
         public virtual StudentsTable StudentsTable { get; set; }
     }

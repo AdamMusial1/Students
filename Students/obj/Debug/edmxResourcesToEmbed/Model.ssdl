@@ -7,6 +7,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Assessment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
     <Property Name="IndeksID" Type="int" />
+    <Property Name="Subjects" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="StudentsTable">
     <Key>
@@ -17,7 +18,7 @@
     <Property Name="StudentSurname" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="DateOfBirt" Type="date" Nullable="false" />
   </EntityType>
-  <Association Name="FK__Assessmen__Indek__29221CFB">
+  <Association Name="FK__Assessmen__Indek__73852659">
     <End Role="StudentsTable" Type="Self.StudentsTable" Multiplicity="0..1" />
     <End Role="AssessmentsTable" Type="Self.AssessmentsTable" Multiplicity="*" />
     <ReferentialConstraint>
@@ -32,7 +33,7 @@
   <EntityContainer Name="StudentsDBModelStoreContainer">
     <EntitySet Name="AssessmentsTable" EntityType="Self.AssessmentsTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StudentsTable" EntityType="Self.StudentsTable" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Assessmen__Indek__29221CFB" Association="Self.FK__Assessmen__Indek__29221CFB">
+    <AssociationSet Name="FK__Assessmen__Indek__73852659" Association="Self.FK__Assessmen__Indek__73852659">
       <End Role="StudentsTable" EntitySet="StudentsTable" />
       <End Role="AssessmentsTable" EntitySet="AssessmentsTable" />
     </AssociationSet>

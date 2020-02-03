@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,14 +28,24 @@ namespace Students.Okna
 
         private void DodajStudentaBtn_Click(object sender, RoutedEventArgs e)
         {
+            int id = Int32.Parse(IndeksTb.Text);
             StudentsDBEntities SDE = new StudentsDBEntities();
             StudentsTable ST = new StudentsTable();
-            ST.Id = Int32.Parse(IndeksTb.Text);
-            ST.StudentName = ImieTb.Text;
-            ST.StudentSurname = NazwiskoTb.Text;
-            ST.DateOfBirt = DataDp.SelectedDate.Value;
-            SDE.StudentsTable.Add(ST);
-            SDE.SaveChanges();
+            var czy_istnieje = SDE.StudentsTable.Where(p => p.Id == id).FirstOrDefault();
+            if (czy_istnieje == null)
+            {
+
+                ST.Id = Int32.Parse(IndeksTb.Text);
+                ST.StudentName = ImieTb.Text;
+                ST.StudentSurname = NazwiskoTb.Text;
+                ST.DateOfBirt = DataDp.SelectedDate.Value;
+                SDE.StudentsTable.Add(ST);
+                SDE.SaveChanges();
+            }
+            else
+{
+                MessageBox.Show("Istnieje już taki student");
+            }
             DialogResult = true;
         }
 
@@ -68,6 +79,18 @@ namespace Students.Okna
                 WalidacjaOpen.Visibility = Visibility.Visible;
                 DodajStudentaBtn.IsEnabled = true;
             }
+        }
+
+        private void IndeksTb_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        
+        private void Tb_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^A-Za-z]");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

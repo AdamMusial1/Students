@@ -42,10 +42,13 @@ namespace Students
             var row = (StudentsTable)ListaStudentowDg.SelectedItem;
             AddAssessment DodawanieOceny = new AddAssessment(row.Id);
             bool? result = DodawanieOceny.ShowDialog();
-            ListaStudentowDg_SelectionChanged(null, null);
+            if(result == true)
+            {
+                ListaStudentowDg_SelectionChanged(null, null);
+            }
         }
 
-        private void ListaStudentowDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void ListaStudentowDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var row = (StudentsTable)ListaStudentowDg.SelectedItem;
             StudentsDBEntities SDE = new StudentsDBEntities();
@@ -65,8 +68,11 @@ namespace Students
             StudentsTable ST = new StudentsTable();
             AddStudent DodawanieStudenta = new AddStudent();
             bool? result = DodawanieStudenta.ShowDialog();
-            WyszykajTb_KeyUp(null, null);
-            ListaStudentowDg_SelectionChanged(null, null);
+            if (result == true)
+            {
+                WyszykajTb_KeyUp(null, null);
+                ListaStudentowDg_SelectionChanged(null, null);
+            }
         }
 
         private void EdytujStudenta_Click(object sender, RoutedEventArgs e)
@@ -74,24 +80,30 @@ namespace Students
             var row = (StudentsTable)ListaStudentowDg.SelectedItem;
             EditStudent EdytujStudenta = new EditStudent(row);
             bool? result = EdytujStudenta.ShowDialog();
-            WyszykajTb_KeyUp(null, null);
-            ListaStudentowDg_SelectionChanged(null, null);
+            if(result == true)
+            {
+                WyszykajTb_KeyUp(null, null);
+                ListaStudentowDg_SelectionChanged(null, null);
+            }
         }
 
         private void UsunStudenta_Click(object sender, RoutedEventArgs e)
         {
-            var row = (StudentsTable)ListaStudentowDg.SelectedItem;
+            var rowStudent = (StudentsTable)ListaStudentowDg.SelectedItem;
             StudentsDBEntities SDE = new StudentsDBEntities();
-            var UsunStudenta = SDE.StudentsTable.Where(w => w.Id == row.Id).FirstOrDefault();
-            var UsunOcenyStudenta = SDE.AssessmentsTable.Where(w => w.IndeksID == row.Id).FirstOrDefault();
-            SDE.StudentsTable.Remove(UsunStudenta);
-            if(UsunOcenyStudenta != null) SDE.AssessmentsTable.Remove(UsunOcenyStudenta);
-            SDE.SaveChanges();
-            WyszykajTb_KeyUp(null,null);
-            ListaStudentowDg_SelectionChanged(null, null);
+            MessageBoxResult question = MessageBox.Show("Czy chcesz usunąć studenta: " + rowStudent.StudentName + " " + rowStudent.StudentSurname + "?", "Usuwanie studenta", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (question == MessageBoxResult.Yes)
+            {
+                var UsunStudenta = SDE.StudentsTable.Where(w => w.Id == rowStudent.Id).FirstOrDefault();
+                SDE.StudentsTable.Remove(UsunStudenta);
+                SDE.AssessmentsTable.RemoveRange(SDE.AssessmentsTable.Where(w => w.IndeksID == rowStudent.Id));
+                SDE.SaveChanges();
+                WyszykajTb_KeyUp(null, null);
+                ListaStudentowDg_SelectionChanged(null, null);
+            }
         }
 
-        private void WyszykajTb_KeyUp(object sender, KeyEventArgs e)
+        public void WyszykajTb_KeyUp(object sender, KeyEventArgs e)
         {
             StudentsDBEntities SDE = new StudentsDBEntities();
             if (WyszykajTb.Text.Count() > 0 || OdDp.SelectedDate.HasValue || DoDp.SelectedDate.HasValue)
@@ -147,9 +159,28 @@ namespace Students
             }
         }
 
-        private void Dp_SelectedDateChanged(object sender, TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
+        private void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             WyszykajTb_KeyUp(null, null);
+        }
+
+        private void ListaStudentowDg_GotFocus(object sender, RoutedEventArgs e)
+        {
+            OcenyDg.Focusable = false;
+        }
+
+        private void UsunBtn_Click(object sender, RoutedEventArgs e)
+        {
+            StudentsDBEntities SDE = new StudentsDBEntities();
+            var rowAssessment = (AssessmentsTable)OcenyDg.SelectedItem;
+            MessageBoxResult question = MessageBox.Show("Czy chcesz usunąć tę ocenę?", "Usuwanie oceny", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (question == MessageBoxResult.Yes)
+            {
+                var UsunOceneStudenta = SDE.AssessmentsTable.Where(w => w.Id == rowAssessment.Id).FirstOrDefault();
+                SDE.AssessmentsTable.Remove(UsunOceneStudenta);
+                SDE.SaveChanges();
+                ListaStudentowDg_SelectionChanged(null, null);
+            }
         }
     }
 }

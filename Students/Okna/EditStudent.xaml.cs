@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,7 +63,7 @@ namespace Students.Okna
             }
         }
 
-        private void Tb_Validate(object sender, SelectionChangedEventArgs e)
+        private void Tb_Validate(object sender, KeyEventArgs e)
         {
             if (ImieTb.Text.Count() < 3 || NazwiskoTb.Text.Count() < 3 || IndeksTb.Text.Count() != 6)
             {
@@ -76,6 +77,12 @@ namespace Students.Okna
                 WalidacjaOpen.Visibility = Visibility.Visible;
                 EdytujStudentaBtn.IsEnabled = true;
             }
+        }
+        
+        private void Tb_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^A-Za-z]");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
